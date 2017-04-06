@@ -3,6 +3,7 @@ body {
 }
 .input {
   background-color: #dcdcdc;
+  color: #000;
   font-size: 1.6rem;
   margin: 0 auto 0.5vh;
   height: 6vw;
@@ -11,7 +12,6 @@ body {
 }
 
 .button {
-  background-color: #6D93FF;
   border-radius: 4px;
   color: #fff;
   display: block;
@@ -20,19 +20,32 @@ body {
   height: 6vw;
   width: 90vw;
 }
-.button:hover {
-  color: #bbb;
-}
-  .locate:hover {
-    color: #666;
-  }
-  .show-me {
-    background-color: #483d8b;
+  .button:active,
+  .button:focus,
+  .button:visited  {
     color: #fff;
   }
+  .locate {
+    background-color: #6D93FF;
+  }
+    .locate:hover {
+      background-color: #fff;
+      color: #6D93FF;
+    }
+  .show-me {
+    background-color: #483d8b;
+  }
+    .show-me:hover {
+      background-color: #fff;
+      color: #483d8b;
+    }
   .reset-map {
     background-color: #b22222;
   }
+    .reset-map:hover {
+      background-color: #fff;
+      color: #b22222;
+    }
 
 .title {
   font-size: 3rem;

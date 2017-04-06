@@ -95,11 +95,10 @@ const getDomainUrl = ( url ) => {
   request.send()
 }
 
-
+const orShowError = ( err ) =>
+  ERRORS[ err.code ]( document.getElementById( `coordinates` ), 
+                      err.message )
 const getOnwLocation = () => {
-  const orShowError = ( err ) =>
-    ERRORS[ err.code ]( document.getElementById( `coordinates` ), 
-                        err.message )
 
   const andShowYourLocation = ( pos ) => {
     const crd = pos.coords
