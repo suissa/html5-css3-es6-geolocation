@@ -1,21 +1,25 @@
 :root {
-  --blue-light: #6D93FF;
   --first: #7FCB3E;
   --second: #4A9C15;
   --third: #FF0000;
   --white: #FFF;
+  --black: #000;
+  --blue-light: #6D93FF;
+  --grey-light: #dcdcdc;
+  --height-six: 6vw;
+  --width-ninety: 90vw;
 }
 body {
   font-size: 20px;
 }
 .input {
-  background-color: #dcdcdc;
-  color: #000;
+  background-color: var(--grey-light);
+  color: var(--black);
   font-size: 1.6rem;
   margin: 0 auto 0.5vh;
-  height: 6vw;
+  height: var(--height-six);
   text-align: center;
-  width: 90vw;
+  width: var(--width-ninety);
 }
 
 .button {
@@ -24,8 +28,8 @@ body {
   display: block;
   font-weight: bold;
   margin: 0 auto 0.5vh;
-  height: 6vw;
-  width: 90vw;
+  height: var(--height-six);
+  width: var(--width-ninety);
 }
   .button:active,
   .button:focus,
