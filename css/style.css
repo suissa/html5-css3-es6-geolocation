@@ -19,8 +19,15 @@ body {
   height: 6vw;
   width: 40vw;
 }
+.button:hover {
+  color: #bbb;
+}
+  .locate:hover {
+    color: #666;
+  }
   .show-me {
     background-color: #483d8b;
+    color: #fff;
   }
   .reset-map {
     background-color: #b22222;
