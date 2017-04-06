@@ -132,7 +132,7 @@ const getCurrentPositionFrom = ( geolocation, andShowYourLocation, orShowError )
   return geolocation.getCurrentPosition( andShowYourLocation, orShowError )
 }
 
-const logYoutPosition = ( position ) => {
+const logYourPosition = ( position ) => {
 
   console.log('Sua posição atual é:')
   console.log('Latitude : ' + position.latitude)
@@ -145,7 +145,7 @@ const andShowYourLocation = ( pos ) => {
   const position = pos.coords
   window.scrollTo(0, 600)
 
-  logYoutPosition( position )
+  logYourPosition( position )
 
   return showMapWithMarkerFor ( `Me` )
                               ( { lat: position.latitude, 
