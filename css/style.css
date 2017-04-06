@@ -1,3 +1,10 @@
+:root {
+  --blue-light: #6D93FF;
+  --first: #7FCB3E;
+  --second: #4A9C15;
+  --third: #FF0000;
+  --white: #FFF;
+}
 body {
   font-size: 20px;
 }
@@ -13,7 +20,7 @@ body {
 
 .button {
   border-radius: 4px;
-  color: #fff;
+  color: var(--white);
   display: block;
   font-weight: bold;
   margin: 0 auto 0.5vh;
@@ -23,28 +30,28 @@ body {
   .button:active,
   .button:focus,
   .button:visited  {
-    color: #fff;
+    color: var(--white);
   }
   .locate {
-    background-color: #6D93FF;
+    background-color: var(--first);
   }
     .locate:hover {
-      background-color: #fff;
-      color: #6D93FF;
+      background-color: var(--white);
+      color: var(--first);
     }
   .show-me {
-    background-color: #483d8b;
+    background-color: var(--second);
   }
     .show-me:hover {
-      background-color: #fff;
-      color: #483d8b;
+      background-color: var(--white);
+      color: var(--second);
     }
   .reset-map {
-    background-color: #b22222;
+    background-color: var(--third);
   }
     .reset-map:hover {
-      background-color: #fff;
-      color: #b22222;
+      background-color: var(--white);
+      color: var(--third);
     }
 
 .title {
