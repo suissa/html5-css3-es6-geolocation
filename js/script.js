@@ -1,8 +1,10 @@
 const MAP = {
   domain: false
 }
-const regExpDomainHost = new RegExp(/^(?!:\/\/)()([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/)
-const regExpDomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/)
+const REGEX = {}
+REGEX.DomainHost = new RegExp(/^(?!:\/\/)()([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/)
+REGEX.DomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/)
+
 const defaultMapOptions = {
   center: { lat: -25.363, lng: -61.044 },
   scrollwheel: false,
@@ -26,8 +28,8 @@ const ERRORS = [ '',
 const getValueFromId = ( id ) => document.getElementById( id ).value
 
 const getValueByIdDomain = ( id ) =>
-  ( testDomain(regExpDomainHost, document.getElementById( id ).value) || 
-    testDomain(regExpDomainIp, document.getElementById( id ).value) )
+  ( testDomain(REGEX.DomainHost, document.getElementById( id ).value) || 
+    testDomain(REGEX.DomainIp, document.getElementById( id ).value) )
     ? getValueFromId( id )
     : showErrorNotDomain(getValueFromId( id ) )
 
