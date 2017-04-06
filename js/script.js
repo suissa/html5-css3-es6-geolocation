@@ -1,7 +1,16 @@
 const regExpDomainHost = new RegExp(/^(?!:\/\/)()([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/)
 const regExpDomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/)
 
-const request = new XMLHttpRequest()
+const defaultMapOptions = {
+  center: { lat: -25.363, lng: -61.044 },
+  scrollwheel: false,
+  zoom: 2
+}
+const initMap = ( el ) => () => 
+  new google.maps.Map( document.getElementById( el ), defaultMapOptions )
+
+window.initMap = initMap( `map` )
+
 const ERRORS = [ '',
   (x) =>
     x.innerHTML = "User denied the request for Geolocation.",
@@ -11,18 +20,8 @@ const ERRORS = [ '',
     x.innerHTML = "The request to get user location timed out."
 ]
 
- const initMap = ( el ) => () => 
-  new google.maps.Map(document.getElementById( el ), {
-    center: { lat: -25.363, lng: -61.044 },
-    scrollwheel: false,
-    zoom: 2
-  })
-
-window.initMap = initMap( `map` )
-
 const getGoogleMap = ( el, options ) => 
   new google.maps.Map( document.getElementById( el ), options )
-
 
 const addMarker = ( title, map, position ) => 
   new google.maps.Marker({
@@ -51,6 +50,8 @@ const getData = (data) => JSON.parse(data)
 
 const success = (title) => ( data ) => {
   const result = getData(data)
+
+  window.scrollTo(0, 600)
   showMapWithMarker( title, `url` )( { lat: result.lat, lon: result.lon } )
 }
 
@@ -81,9 +82,9 @@ const buttonGetOwnLocation = document.getElementById( `getOwnLocation` )
 
 const getDomainUrl = ( url ) => {
 
+  const request = new XMLHttpRequest()
   request.open( `GET`, `http://ip-api.com/json/` + url, true )
   request.onload = () => {
-
     ( request.status >= 200 && 
       request.status < 400 && 
       JSON.parse( request.responseText ).status != 'fail' )
@@ -108,6 +109,7 @@ const getOnwLocation = () => {
     console.log('Longitude: ' + crd.longitude)
     console.log('Mais ou menos ' + crd.accuracy + ' metros.')
 
+    window.scrollTo(0, 600)
     showMapWithMarker( `eu` )( { lat: crd.latitude, lon: crd.longitude } )
   }
 
