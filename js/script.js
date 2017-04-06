@@ -41,18 +41,18 @@ const getMapOptions = ( response, type ) => ( {
   scrollwheel: false
 })
 
-const showMapWithMarker = ( title, type = `own` ) => ( response ) => 
+const showMapWithMarkerFor = ( title, type = `own` ) => ( response ) => 
   addMarker(  title,
               getGoogleMap( 'map', getMapOptions( response, type ) ),
               getPositionCenter( response ))
 
 const getData = (data) => JSON.parse(data)
 
-const success = (title) => ( data ) => {
+const success = ( title, type = `url` ) => ( data ) => {
   const result = getData(data)
 
   window.scrollTo(0, 600)
-  showMapWithMarker( title, `url` )( { lat: result.lat, lon: result.lon } )
+  showMapWithMarkerFor( title, type )( { lat: result.lat, lon: result.lon } )
 }
 
 const testDomain = ( regex, domain ) =>
@@ -98,20 +98,29 @@ const getDomainUrl = ( url ) => {
 const orShowError = ( err ) =>
   ERRORS[ err.code ]( document.getElementById( `coordinates` ), 
                       err.message )
+
+const getCurrentPositionFrom = ( geolocation, andShowYourLocation, orShowError ) =>
+  geolocation.getCurrentPosition( andShowYourLocation, orShowError )
+
+
+const andShowYourLocation = ( pos ) => {
+  const position = pos.coords
+
+  console.log('Sua posição atual é:')
+  console.log('Latitude : ' + position.latitude)
+  console.log('Longitude: ' + position.longitude)
+  console.log('Mais ou menos ' + position.accuracy + ' metros.')
+
+  window.scrollTo(0, 600)
+  return showMapWithMarkerFor( `Me` )( { lat: crd.latitude, lon: crd.longitude } )
+}
+
 const getOnwLocation = () => {
 
-  const andShowYourLocation = ( pos ) => {
-    const crd = pos.coords
 
-    console.log('Sua posição atual é:')
-    console.log('Latitude : ' + crd.latitude)
-    console.log('Longitude: ' + crd.longitude)
-    console.log('Mais ou menos ' + crd.accuracy + ' metros.')
-
-    window.scrollTo(0, 600)
-    showMapWithMarker( `eu` )( { lat: crd.latitude, lon: crd.longitude } )
-  }
-
-  navigator.geolocation.getCurrentPosition( andShowYourLocation, orShowError )
+  return getCurrentPositionFrom(  navigator.geolocation, 
+                                  andShowYourLocation, 
+                                  orShowError )
+  // 
 }
 
