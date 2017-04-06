@@ -1,10 +1,28 @@
+const usingClick = `click`
 const MAP = {
   domain: false
 }
-const usingClick = `click`
 const REGEX = {}
-REGEX.DomainHost = new RegExp(/^(?!:\/\/)()([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/)
+REGEX.DomainHost = new RegExp(/([-a-zA-Z0-9:%_\+.~#?&//=]*)/)
 REGEX.DomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/)
+
+const hideLoading = () =>  {
+  window.scrollTo(0, 600)
+  document.getElementById( `loading` ).style.display = `none`
+}
+
+const showLoading = () => {
+  window.scrollTo(0, 0)
+  document.getElementById( `loading` ).style.display = `block`
+}
+
+const addLoadingScreenTo = ( element ) => () => {
+  const buttons = document.querySelectorAll( element );
+  for (i = 0; i < buttons.length - 1; i++)  // dont want Reset button
+    buttons[i].addEventListener( `click`, showLoading )
+}
+
+window.addEventListener( `load`, addLoadingScreenTo( `button` ) )
 
 const elementId = ( id ) => document.getElementById( id )
 const addEventTo = ( el, event, andRun ) => 
@@ -45,7 +63,6 @@ const resetMap = () =>
     ? MAP.domain()
     : window.initMap()
 
-
 const forGetDomainLocation = () => getDomainUrl( getValueByIdDomain( `domain` ) )
 const forGetYourOwnLocation = () => getOnwLocation()
 const forResetMap = () => resetMap()
@@ -67,9 +84,9 @@ const testDomain = ( regex, domain ) =>
 
 const getData = ( data ) => JSON.parse( data )
 
-const getGoogleMap = ( el, options ) => 
+const getGoogleMap = ( el, options ) => {
   new google.maps.Map( elementId( el ), options )
-
+}
 const getZoom = ( type ) => ( type === `own` ) ? 17 : 13
 
 const getMapOptions = ( response, type ) => ( {
@@ -97,8 +114,8 @@ const showMapWithMarkerFor = ( title, type = `own` ) => ( response ) =>
 const successDomainWith = ( title, type = `url` ) => ( data ) => {
   const result = getData(data)
 
-  window.scrollTo(0, 600)
-
+  // window.scrollTo(0, 600)
+  hideLoading()
   MAP.domain = () => 
     showMapWithMarkerFor( title, type )( { lat: result.lat, lon: result.lon } )
 
@@ -128,8 +145,9 @@ const getDomainUrl = ( url ) => {
 }
 
 const getCurrentPositionFrom = ( geolocation, andShowYourLocation, orShowError ) => {
-  (map)
-  return geolocation.getCurrentPosition( andShowYourLocation, orShowError )
+
+  // (map) 
+    return geolocation.getCurrentPosition( andShowYourLocation, orShowError )
 }
 
 const logYourPosition = ( position ) => {
@@ -143,8 +161,9 @@ const logYourPosition = ( position ) => {
 
 const andShowYourLocation = ( pos ) => {
   const position = pos.coords
-  window.scrollTo(0, 600)
+  // window.scrollTo(0, 600)
 
+  hideLoading()
   logYourPosition( position )
 
   return showMapWithMarkerFor ( `Me` )

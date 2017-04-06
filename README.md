@@ -55,15 +55,22 @@ In this example I used some sweeeet HTML5, CSS3 and ES6 only for show how we do 
 const MAP = {
   domain: false
 }
-const regExpDomainHost = new RegExp(/^(?!:\/\/)()([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/)
-const regExpDomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/)
+const usingClick = `click`
+const REGEX = {}
+REGEX.DomainHost = new RegExp(/^(?!:\/\/)()([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/)
+REGEX.DomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/)
+
+const elementId = ( id ) => document.getElementById( id )
+const addEventTo = ( el, event, andRun ) => 
+  el.addEventListener( event, andRun ) 
+
 const defaultMapOptions = {
   center: { lat: -25.363, lng: -61.044 },
   scrollwheel: false,
   zoom: 2
 }
 const initMap = ( el ) => () => 
-  new google.maps.Map( document.getElementById( el ), defaultMapOptions )
+  new google.maps.Map( elementId( el ), defaultMapOptions )
 
 window.initMap = initMap( `map` )
 
@@ -76,12 +83,14 @@ const ERRORS = [ '',
     x.innerHTML = "The request to get user location timed out."
 ]
 
+const testREGEXDomain = ( REGEX, id ) => 
+  testDomain(REGEX.DomainHost, getValueFromId( id ) ) || 
+  testDomain(REGEX.DomainIp, getValueFromId( id ) )
 
-const getValueFromId = ( id ) => document.getElementById( id ).value
+const getValueFromId = ( id ) => elementId( id ).value
 
 const getValueByIdDomain = ( id ) =>
-  ( testDomain(regExpDomainHost, document.getElementById( id ).value) || 
-    testDomain(regExpDomainIp, document.getElementById( id ).value) )
+  ( testREGEXDomain( REGEX, id ) )
     ? getValueFromId( id )
     : showErrorNotDomain(getValueFromId( id ) )
 
@@ -91,20 +100,21 @@ const resetMap = () =>
     : window.initMap()
 
 
-const inputGetDomain = () => getDomainUrl( getValueByIdDomain( `domain` ) )
+const forGetDomainLocation = () => getDomainUrl( getValueByIdDomain( `domain` ) )
+const forGetYourOwnLocation = () => getOnwLocation()
+const forResetMap = () => resetMap()
 
-const inputGetOwn = () => getOnwLocation()
+const buttonGetDomainLocation = addEventTo( elementId( `getDomainLocation` ),
+                                            usingClick, 
+                                            forGetDomainLocation )
 
-const inputResetMap = () => resetMap()
+const buttonGetOwnLocation = addEventTo( elementId( `getOwnLocation` ),
+                                            usingClick, 
+                                            forGetYourOwnLocation )
 
-const buttonGetDomainLocation = document.getElementById( `getDomainLocation` )
-                                     .addEventListener( `click`, inputGetDomain )
-
-const buttonGetOwnLocation = document.getElementById( `getOwnLocation` )
-                                    .addEventListener( `click`, inputGetOwn )
-
-const buttonReset = document.getElementById( `resetMap` )
-                                    .addEventListener( `click`, inputResetMap )
+const buttonReset = addEventTo( elementId( `resetMap` ),
+                                            usingClick, 
+                                            forResetMap )
 
 const testDomain = ( regex, domain ) =>
   regex.test( domain )
@@ -112,7 +122,7 @@ const testDomain = ( regex, domain ) =>
 const getData = ( data ) => JSON.parse( data )
 
 const getGoogleMap = ( el, options ) => 
-  new google.maps.Map( document.getElementById( el ), options )
+  new google.maps.Map( elementId( el ), options )
 
 const getZoom = ( type ) => ( type === `own` ) ? 17 : 13
 
@@ -153,7 +163,7 @@ const showErrorNotDomain = ( value ) =>
   alert( `Domain is required! Value: ${value} is invalid!` )
 
 const orShowError = ( err ) =>
-  ERRORS[ err.code ]( document.getElementById( `coordinates` ), 
+  ERRORS[ err.code ]( elementId( `coordinates` ), 
                       err.message )
 
 const getDomainUrl = ( url ) => {
@@ -171,10 +181,12 @@ const getDomainUrl = ( url ) => {
   request.send()
 }
 
-const getCurrentPositionFrom = ( geolocation, andShowYourLocation, orShowError ) =>
-  geolocation.getCurrentPosition( andShowYourLocation, orShowError )
+const getCurrentPositionFrom = ( geolocation, andShowYourLocation, orShowError ) => {
+  (map)
+  return geolocation.getCurrentPosition( andShowYourLocation, orShowError )
+}
 
-const logYoutPosition = ( position ) => {
+const logYourPosition = ( position ) => {
 
   console.log('Sua posição atual é:')
   console.log('Latitude : ' + position.latitude)
@@ -187,7 +199,7 @@ const andShowYourLocation = ( pos ) => {
   const position = pos.coords
   window.scrollTo(0, 600)
 
-  logYoutPosition( position )
+  logYourPosition( position )
 
   return showMapWithMarkerFor ( `Me` )
                               ( { lat: position.latitude, 
@@ -198,6 +210,7 @@ const getOnwLocation = () =>
   getCurrentPositionFrom( navigator.geolocation, 
                           andShowYourLocation, 
                           orShowError )
+
 ```
 
 
