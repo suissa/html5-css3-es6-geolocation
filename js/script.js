@@ -1,3 +1,6 @@
+const MAP = {
+  domain: false
+}
 const regExpDomainHost = new RegExp(/^(?!:\/\/)()([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/)
 const regExpDomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/)
 
@@ -20,8 +23,24 @@ const ERRORS = [ '',
     x.innerHTML = "The request to get user location timed out."
 ]
 
+const getData = (data) => JSON.parse(data)
+
+const testDomain = ( regex, domain ) =>
+  regex.test( domain )
+
 const getGoogleMap = ( el, options ) => 
   new google.maps.Map( document.getElementById( el ), options )
+
+const getZoom = ( type ) => ( type === `own` ) ? 17 : 13
+
+const getMapOptions = ( response, type ) => ( {
+  zoom:  getZoom( type ),
+  center: getPositionCenter( response ),
+  scrollwheel: false
+})
+
+const getPositionCenter = ( response ) => 
+  ( { lat: response.lat, lng: response.lon } )
 
 const addMarker = ( title, map, position ) => 
   new google.maps.Marker({
@@ -30,33 +49,23 @@ const addMarker = ( title, map, position ) =>
     title
   })
 
-const getZoom = ( type ) => ( type === `own` ) ? 17 : 13
-
-const getPositionCenter = ( response ) => 
-  ( { lat: response.lat, lng: response.lon } )
-
-const getMapOptions = ( response, type ) => ( {
-  zoom:  getZoom( type ),
-  center: getPositionCenter( response ),
-  scrollwheel: false
-})
-
 const showMapWithMarkerFor = ( title, type = `own` ) => ( response ) => 
   addMarker(  title,
               getGoogleMap( 'map', getMapOptions( response, type ) ),
               getPositionCenter( response ))
 
-const getData = (data) => JSON.parse(data)
 
-const success = ( title, type = `url` ) => ( data ) => {
+const successDomainWith = ( title, type = `url` ) => ( data ) => {
   const result = getData(data)
 
   window.scrollTo(0, 600)
-  showMapWithMarkerFor( title, type )( { lat: result.lat, lon: result.lon } )
+
+  MAP.domain = () => 
+    showMapWithMarkerFor( title, type )( { lat: result.lat, lon: result.lon } )
+
+  return MAP.domain()
 }
 
-const testDomain = ( regex, domain ) =>
-  regex.test( domain )
 
 const showErrorNotDomain = ( value ) => 
   alert( `Domain is required! Value: ${value} is invalid!` )
@@ -69,9 +78,17 @@ const getValueByIdDomain = ( id ) =>
     ? getValueFromId( id )
     : showErrorNotDomain(getValueFromId( id ) )
 
+const resetMap = () => 
+  ( MAP.domain )
+    ? MAP.domain()
+    : window.initMap()
+
+
 const inputGetDomain = () => getDomainUrl( getValueByIdDomain( `domain` ) )
 
 const inputGetOwn = () => getOnwLocation()
+
+const inputResetMap = () => resetMap()
 
 const buttonGetDomainLocation = document.getElementById( `getDomainLocation` )
                                      .addEventListener( `click`, inputGetDomain )
@@ -79,6 +96,8 @@ const buttonGetDomainLocation = document.getElementById( `getDomainLocation` )
 const buttonGetOwnLocation = document.getElementById( `getOwnLocation` )
                                     .addEventListener( `click`, inputGetOwn )
 
+const buttonReset = document.getElementById( `resetMap` )
+                                    .addEventListener( `click`, inputResetMap )
 
 const getDomainUrl = ( url ) => {
 
@@ -88,7 +107,7 @@ const getDomainUrl = ( url ) => {
     ( request.status >= 200 && 
       request.status < 400 && 
       JSON.parse( request.responseText ).status != 'fail' )
-        ? success( url )( request.responseText )
+        ? successDomainWith( url )( request.responseText )
         : showErrorNotDomain( url )
 
   }
@@ -112,7 +131,9 @@ const andShowYourLocation = ( pos ) => {
   console.log('Mais ou menos ' + position.accuracy + ' metros.')
 
   window.scrollTo(0, 600)
-  return showMapWithMarkerFor( `Me` )( { lat: crd.latitude, lon: crd.longitude } )
+  return showMapWithMarkerFor ( `Me` )
+                              ( { lat: position.latitude, 
+                                  lon: position.longitude } )
 }
 
 const getOnwLocation = () => {
