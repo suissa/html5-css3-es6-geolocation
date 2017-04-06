@@ -1,0 +1,22 @@
+body {
+  font-size: 20px;
+}
+.input {
+  width: 40vw;
+}
+.button {
+  background-color: #6D93FF;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto 2vh;
+  width: 40vw;
+}
+.title {
+  font-size: 3rem;
+  text-align: center;
+  padding: 2rem 0;
+} 
+.content {
+  font-size: 1.8rem;
+  text-align: center;
+}

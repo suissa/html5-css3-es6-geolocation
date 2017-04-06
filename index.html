@@ -5,21 +5,30 @@
     <title>Ajax</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css">
     <link rel="stylesheet" href="https://developers.google.com/maps/documentation/javascript/demos/demos.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDB9s778lpseYFgldXkeKOSI9BcY2P9kg&callback=initMap"
         async defer></script>
   </head>
   <body>
 
-    <p>Click the button to get your coordinates.</p> <br>
-    <input id="domain" class="input" type="text" name="" value="webschool.io" placeholder="Domain" style="width:130px;">
-    <button id ='getCoordinates' class="button">Locate</button>
-    <button id ='getCoordinatesOwnLocation' class="button">Show Me</button> <br>
+    <header>
+      <h1 class="title">Geolocation with HTML5 and ES6 <3</h1>
+    </header>
 
+    <main class="content">
+      <p>
+        Click the Locate button to get domain coordinates.
+        <br>
+        Click the Show Me button to get your coordinates.
+      </p> 
 
+      <input id="domain" class="input" type="text" placeholder="Domain">
 
-    <div id="map"></div>
+      <button id ='getCoordinates' class="button">Locate</button>
+      <button id ='getCoordinatesOwnLocation' class="button">Show Me</button> 
 
-    <div id="mapMe"></div>
+      <div id="map"></div>
+    </main>
 
     <script>
 
