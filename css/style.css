@@ -3,6 +3,7 @@ body {
 }
 .input {
   background-color: #dcdcdc;
+  font-size: 1.6rem;
   margin: 0 auto 0.5vh;
   height: 6vw;
   text-align: center;
