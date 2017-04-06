@@ -2,8 +2,11 @@ body {
   font-size: 20px;
 }
 .input {
-  width: 40vw;
+  background-color: #dcdcdc;
+  margin: 0 auto 2vh;
+  height: 6vw;
   text-align: center;
+  width: 40vw;
 }
 
 .button {
@@ -13,10 +16,14 @@ body {
   font-weight: bold;
   display: block;
   margin: 0 auto 2vh;
+  height: 6vw;
   width: 40vw;
 }
   .show-me {
     background-color: #483d8b;
+  }
+  .reset-map {
+    background-color: #b22222;
   }
 
 .title {
