@@ -1,4 +1,3 @@
-
 const regExpDomainHost = new RegExp(/^(?!:\/\/)()([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/);
 const regExpDomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);
 
@@ -16,17 +15,17 @@ const ERRORS = [ '',
   return new google.maps.Map(document.getElementById( el ), {
     center: { lat: -25.363, lng: -61.044 },
     scrollwheel: false,
-    zoom: 9
+    zoom: 2
   });
 }
 
-window.initMap = initMap( 'map' )
+window.initMap = initMap( `map` )
 
-const getGoogleMap = (el, options) => {
+const getGoogleMap = ( el, options ) => {
   return new google.maps.Map( document.getElementById( el ), options )
 }
 
-const addMarker = (map, position, title) => {
+const addMarker = ( title, map, position ) => {
   return new google.maps.Marker({
     map,
     position,
@@ -34,54 +33,54 @@ const addMarker = (map, position, title) => {
   });
 }
 
+const getZoom = ( type ) => ( type === `own` ) ? 17 : 9
 
-const showMapWithMarker = ( title ) => ( response ) => {
-  console.log(`response: `, response)
-  lat = response.lat
-  lng = response.lon
+const getPositionCenter = ( response ) => 
+  ( { lat: response.lat, lng: response.lon } )
 
-  const options =  {
-    center: { lat, lng },
-    scrollwheel: false,
-    zoom: 17
-  }
+const getMapOptions = ( response, type ) => ( {
+  zoom:  getZoom( type ),
+  center: getPositionCenter( response ),
+  scrollwheel: false
+})
 
-  return addMarker( getGoogleMap( 'map', options ),
-                    { lat, lng },
-                    title )
-}
+const showMapWithMarker = ( title, type = `own` ) => ( response ) => 
+  addMarker(  title,
+              getGoogleMap( 'map', getMapOptions( response, type ) ),
+              getPositionCenter( response ))
 
 const getData = (data) => JSON.parse(data);
 
 const success = (title) => ( data ) => {
   const result = getData(data)
-  showMapWithMarker( title )( { lat: result.lat, lon: result.lon } )
+  showMapWithMarker( title, `url` )( { lat: result.lat, lon: result.lon } )
 }
 
 
-const testDomain = (regex, domain) => //console.log(regex, domain, regex.test(domain));
+const testDomain = ( regex, domain ) =>
   regex.test(domain)
 
-const showErrorNotDomain = (value) => alert('Domain is required! Value: "' + value + '" is invalid!')
-const getValueFromId = (id) => document.getElementById(id).value
+const showErrorNotDomain = ( value ) => alert('Domain is required! Value: "' + value + '" is invalid!')
+const getValueFromId = ( id ) => document.getElementById(id).value
 
-const getValueByIdDomain = (id) =>
-  ( testDomain(regExpDomainHost, document.getElementById(id).value) || testDomain(regExpDomainIp, document.getElementById(id).value) )
-    ? getValueFromId(id)
-    : showErrorNotDomain(getValueFromId(id))
+const getValueByIdDomain = ( id ) =>
+  ( testDomain(regExpDomainHost, document.getElementById( id ).value) || 
+    testDomain(regExpDomainIp, document.getElementById (id ).value) )
+    ? getValueFromId( id )
+    : showErrorNotDomain(getValueFromId( id ))
 
-const inputGetDomain = () => getDomainUrl(getValueByIdDomain('domain'));
+const inputGetDomain = () => getDomainUrl(getValueByIdDomain( `domain` ));
 
 const inputGetOwn = () => getOnwLocation();
 
-const buttonGetCoordinates = document.getElementById('getCoordinates')
-                                     .addEventListener('click', inputGetDomain)
+const buttonGetCoordinates = document.getElementById( `getCoordinates` )
+                                     .addEventListener( `click`, inputGetDomain )
 
-const buttonGetOwnLocation = document.getElementById('getCoordinatesOwnLocation')
-                                    .addEventListener('click', inputGetOwn)
+const buttonGetOwnLocation = document.getElementById( `getCoordinatesOwnLocation` )
+                                    .addEventListener( `click`, inputGetOwn )
 
 
-const getDomainUrl = (url) => {
+const getDomainUrl = ( url ) => {
 
   request.open('GET', 'http://ip-api.com/json/' + url, true);
   request.onload = () => {
@@ -96,10 +95,10 @@ const getDomainUrl = (url) => {
 
 
 const getOnwLocation = () => {
-  const error = (err) =>
-    ERRORS[err.code](document.getElementById(`coordinates`), err.message)
+  const error = ( err ) =>
+    ERRORS[err.code](document.getElementById( `coordinates` ), err.message)
 
-  const sucesso = (pos) => {
+  const sucesso = ( pos ) => {
     var crd = pos.coords;
 
     console.log('Sua posição atual é:');
@@ -110,6 +109,6 @@ const getOnwLocation = () => {
     showMapWithMarker( `eu` )( { lat: crd.latitude, lon: crd.longitude } )
   };
 
-  navigator.geolocation.getCurrentPosition(sucesso, error);
+  navigator.geolocation.getCurrentPosition( sucesso, error );
 }
 
