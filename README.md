@@ -2,6 +2,8 @@
 
 In this example I used some sweeeet HTML5, CSS3 and ES6 only for show how we do this the right way.
 
+> **Functional Flavored**
+
 ## HTML5
 
 ```html
