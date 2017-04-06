@@ -3,7 +3,9 @@ body {
 }
 .input {
   width: 40vw;
+  text-align: center;
 }
+
 .button {
   background-color: #6D93FF;
   border-radius: 4px;
@@ -13,6 +15,10 @@ body {
   margin: 0 auto 2vh;
   width: 40vw;
 }
+  .show-me {
+    background-color: #483d8b;
+  }
+
 .title {
   font-size: 3rem;
   text-align: center;
