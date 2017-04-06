@@ -3,10 +3,10 @@ body {
 }
 .input {
   background-color: #dcdcdc;
-  margin: 0 auto 2vh;
+  margin: 0 auto 0.5vh;
   height: 6vw;
   text-align: center;
-  width: 40vw;
+  width: 90vw;
 }
 
 .button {
@@ -15,9 +15,9 @@ body {
   color: #fff;
   display: block;
   font-weight: bold;
-  margin: 0 auto 2vh;
+  margin: 0 auto 0.5vh;
   height: 6vw;
-  width: 40vw;
+  width: 90vw;
 }
 .button:hover {
   color: #bbb;
