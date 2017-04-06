@@ -1,5 +1,7 @@
 # Example of geolocation using HTML5, CSS3 and ES6
 
+![image of a map with markers](http://www.visualatin.agency/wp-content/uploads/2015/10/geolocation-map.jpg)
+
 In this example I used some sweeeet HTML5, CSS3 and ES6 only for show how we do this the right way.
 
 > **Functional Flavored**
