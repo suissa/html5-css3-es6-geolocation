@@ -1,4 +1,6 @@
 :root {
+  --theme-buttons-amount: 3;
+
   --first: #7FCB3E;
   --second: #4A9C15;
   --third: #FF0000;
@@ -6,17 +8,50 @@
   --black: #000;
   --blue-light: #6D93FF;
   --grey-light: #dcdcdc;
+  --grey-dark: #666;
   --height-six: 6vh;
   --width-ninety: 90vw;
-  --pink-theme: {
-    color: #6A8759;
-    background-color: #F64778;
-  }
+  --default-theme: {
+    color: var(--black);
+    background-color: var(--white);
+  };
+  --dark-theme: {
+    color: var(--white);
+    background-color: var(--black);
+  };
+  --grey-theme: {
+    color: var(--grey-light);
+    background-color: var(--grey-dark);
+  };
 }
 body {
-  font-size: 20px;/*
-  @apply --pink-theme;*/
+  font-size: 20px;
 }
+
+.buttons-theme-list {
+  text-align: center;
+}
+
+.button.theme {
+  display: inline-block;
+  width: calc( 100vw / var(--theme-buttons-amount) - 2vw );
+}
+
+.button.theme.default,
+.default-theme  {
+  @apply --default-theme;
+}
+
+.button.theme.dark,
+.dark-theme  {
+  @apply --dark-theme;
+}
+
+.button.theme.grey,
+.grey-theme {
+  @apply --grey-theme;
+}
+
 .input {
   background-color: var(--grey-light);
   color: var(--black);
