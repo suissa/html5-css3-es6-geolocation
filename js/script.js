@@ -1,8 +1,14 @@
 const usingClick = `click`
+const REGEX = {}
 const MAP = {
   domain: false
 }
-const REGEX = {}
+const defaultMapOptions = {
+  center: { lat: -25.363, lng: -61.044 },
+  scrollwheel: false,
+  zoom: 2
+}
+
 REGEX.DomainHost = new RegExp(/([-a-zA-Z0-9:%_\+.~#?&//=]*)/)
 REGEX.DomainIp = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/)
 
@@ -28,11 +34,6 @@ const elementId = ( id ) => document.getElementById( id )
 const addEventTo = ( el, event, andRun ) => 
   el.addEventListener( event, andRun ) 
 
-const defaultMapOptions = {
-  center: { lat: -25.363, lng: -61.044 },
-  scrollwheel: false,
-  zoom: 2
-}
 const initMap = ( el ) => () => 
   new google.maps.Map( elementId( el ), defaultMapOptions )
 
@@ -85,6 +86,7 @@ const testDomain = ( regex, domain ) =>
 const getData = ( data ) => JSON.parse( data )
 
 const getGoogleMap = ( el, options ) => {
+
   new google.maps.Map( elementId( el ), options )
 }
 const getZoom = ( type ) => ( type === `own` ) ? 17 : 13
@@ -130,9 +132,10 @@ const orShowError = ( err ) =>
                       err.message )
 
 const getDomainUrl = ( url ) => {
-
   const request = new XMLHttpRequest()
+
   request.open( `GET`, `http://ip-api.com/json/` + url, true )
+
   request.onload = () => {
     ( request.status >= 200 && 
       request.status < 400 && 
@@ -141,6 +144,7 @@ const getDomainUrl = ( url ) => {
         : showErrorNotDomain( url )
 
   }
+
   request.send()
 }
 
@@ -161,7 +165,6 @@ const logYourPosition = ( position ) => {
 
 const andShowYourLocation = ( pos ) => {
   const position = pos.coords
-  // window.scrollTo(0, 600)
 
   hideLoading()
   logYourPosition( position )

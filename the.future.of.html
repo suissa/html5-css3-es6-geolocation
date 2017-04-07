@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="description" content="Example of geolocation using HTML5, CSS3 and ES6" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="Example of geolocation using HTML5, CSS3 and ES6">
+    <meta name="twitter:site" content="@publisher_handle">
+    <meta name="twitter:title" content="Example of geolocation using HTML5, CSS3 and ES6">
+    <meta name="twitter:description" content="Example of geolocation using HTML5, CSS3 and ES6">
+    <meta name="twitter:creator" content="@osuissa">
+    <!-- Twitter Summary card images must be at least 120x120px -->
+    <!-- <meta name="twitter:image" content="http://www.example.com/image.jpg"> -->
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="Example of geolocation using HTML5, CSS3 and ES6" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://www.example.com/" />
+    <meta property="og:image" content="http://example.com/image.jpg" />
+    <meta property="og:description" content="Description Here" /> 
+    <meta property="og:site_name" content="Site Name, i.e. Moz" />
+    <meta property="fb:admins" content="Facebook numeric ID" />
+
+    <title>Geolocation with HTML5 and ES6</title>
+
+    <link rel="shortcut icon" type="image/ico" href="http://webschool.io/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css">
+    <link rel="stylesheet" href="https://developers.google.com/maps/documentation/javascript/demos/demos.css">
+    <link rel="stylesheet" href="css/the.future.of.css">
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDB9s778lpseYFgldXkeKOSI9BcY2P9kg&callback=initMap" async defer></script>
+    <script src="js/script.js" async defer></script>
+
+  </head>
+  <body>
+
+    <header>
+
+      <h1 class="title">
+        Example of geolocation using 
+        <br>
+        HTML5, CSS3 and ES6 
+        <br>
+        made with <img class="icon-love" src="imgs/love.png" alt="love">
+      </h1>
+
+    </header>
+
+    <main class="content">
+
+      <p>
+        Click Locate button to get domain coordinates.
+        <br>
+        Click Show Me button to get your coordinates.
+      </p> 
+
+      <input  id="domain" class="input" type="url" 
+              placeholder="Domain" value="webschool.io">
+
+      <button id ='getDomainLocation' class="button locate">Locate</button>
+      <button id ='getOwnLocation' class="button show-me">Show Me</button> 
+      <button id ='resetMap' class="button reset-map">Reset</button> 
+
+      <section id="map"></section>
+
+    </main>
+
+    <div id="loading">
+      <img src="imgs/loading.gif" alt="loading">
+    </div>
+  </body>
+</html>

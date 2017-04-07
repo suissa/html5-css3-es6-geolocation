@@ -1,0 +1,90 @@
+:root {
+  --first: #7FCB3E;
+  --second: #4A9C15;
+  --third: #FF0000;
+  --white: #FFF;
+  --black: #000;
+  --blue-light: #6D93FF;
+  --grey-light: #dcdcdc;
+  --height-six: 6vh;
+  --width-ninety: 90vw;
+  --pink-theme: {
+    color: #6A8759;
+    background-color: #F64778;
+  }
+}
+body {
+  font-size: 20px;/*
+  @apply --pink-theme;*/
+}
+.input {
+  background-color: var(--grey-light);
+  color: var(--black);
+  font-size: 1.6rem;
+  margin: 0 auto 0.5vh;
+  height: var(--height-six);
+  text-align: center;
+  width: var(--width-ninety);
+}
+
+.button {
+  border-radius: 4px;
+  color: var(--white);
+  display: block;
+  font-weight: bold;
+  margin: 0 auto 0.5vh;
+  height: var(--height-six);
+  width: var(--width-ninety);
+}
+  .button:active,
+  .button:focus,
+  .button:visited  {
+    color: var(--white);
+  }
+  .locate {
+    background-color: var(--first);
+  }
+    .locate:hover {
+      background-color: var(--white);
+      color: var(--first);
+    }
+  .show-me {
+    background-color: var(--second);
+  }
+    .show-me:hover {
+      background-color: var(--white);
+      color: var(--second);
+    }
+  .reset-map {
+    background-color: var(--third);
+  }
+    .reset-map:hover {
+      background-color: var(--white);
+      color: var(--third);
+    }
+
+.title {
+  font-size: 3rem;
+  text-align: center;
+  padding: 2rem 0;
+} 
+.content {
+  font-size: 1.8rem;
+  text-align: center;
+}
+.icon-love {
+  width: 3.6rem;
+}
+#loading {
+  background-color: rgba(255, 255, 255, 0.7);
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 150vh;
+  text-align: center;
+  width: 100vw;
+}
+#loading img {
+  margin: 40vh auto;
+}
