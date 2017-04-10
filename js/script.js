@@ -157,9 +157,9 @@ const getCurrentPositionFrom = ( geolocation, andShowYourLocation, orShowError )
 const logYourPosition = ( position ) => {
 
   console.log('Sua posição atual é:')
-  console.log('Latitude : ' + position.latitude)
-  console.log('Longitude: ' + position.longitude)
-  console.log('Mais ou menos ' + position.accuracy + ' metros.')
+  console.log(`Latitude : ${position.latitude}`)
+  console.log(`Longitude: ${position.longitude}`)
+  console.log(`Mais ou menos ${position.accuracy} metros.`)
 
 }
 
